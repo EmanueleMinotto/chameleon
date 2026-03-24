@@ -1,0 +1,75 @@
+{
+  "consumer": { "name": "PetstoreFrontend" },
+  "provider": { "name": "PetstoreAPI" },
+  "interactions": [
+    {
+      "description": "A request for the list of available pets",
+      "request": {
+        "method": "GET",
+        "path": "/pets",
+        "query": "status=available"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": [
+          {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "Fluffy",
+            "status": "available",
+            "species": "dog"
+          }
+        ]
+      }
+    },
+    {
+      "description": "A request for a specific pet",
+      "request": {
+        "method": "GET",
+        "path": "/pets/550e8400-e29b-41d4-a716-446655440000"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "name": "Fluffy",
+          "status": "available",
+          "species": "dog",
+          "breed": "Labrador",
+          "age": 2,
+          "weight": 25.3,
+          "photoUrl": "https://example.com/fluffy.jpg",
+          "createdAt": "2024-01-01T00:00:00Z"
+        }
+      }
+    },
+    {
+      "description": "A request to place an order",
+      "request": {
+        "method": "POST",
+        "path": "/store/orders",
+        "headers": { "Content-Type": "application/json" },
+        "body": {
+          "petId": "550e8400-e29b-41d4-a716-446655440000",
+          "quantity": 1
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": { "Content-Type": "application/json" },
+        "body": {
+          "id": "770e8400-e29b-41d4-a716-446655440002",
+          "petId": "550e8400-e29b-41d4-a716-446655440000",
+          "quantity": 1,
+          "status": "placed",
+          "complete": false,
+          "createdAt": "2024-03-01T12:00:00Z"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": { "version": "2.0.0" }
+  }
+}

@@ -1,0 +1,169 @@
+version: 1
+
+# Annotations for /store/* endpoints.
+# Kept in a separate file to demonstrate multi-file annotation support.
+
+paths:
+  /store/inventory:
+    get:
+      response:
+        "$.available":
+          faker: "number.int"
+          fakerArgs:
+            - min: 10
+              max: 200
+        "$.pending":
+          faker: "number.int"
+          fakerArgs:
+            - min: 0
+              max: 30
+        "$.sold":
+          faker: "number.int"
+          fakerArgs:
+            - min: 50
+              max: 1000
+
+  /store/orders:
+    post:
+      response:
+        "$.id":
+          faker: "string.uuid"
+        "$.petId":
+          faker: "string.uuid"
+        "$.quantity":
+          faker: "number.int"
+          fakerArgs:
+            - min: 1
+              max: 5
+        "$.status":
+          static: "placed"
+        "$.complete":
+          static: false
+        "$.totalPrice":
+          faker: "number.float"
+          fakerArgs:
+            - min: 9.99
+              max: 499.99
+              fractionDigits: 2
+        "$.createdAt":
+          faker: "date.recent"
+          transform: "toISOString"
+        "$.shipDate":
+          faker: "date.soon"
+          fakerArgs:
+            - days: 7
+          transform: "toISOString"
+
+  /store/orders/{orderId}:
+    get:
+      response:
+        "$.id":
+          faker: "string.uuid"
+        "$.petId":
+          faker: "string.uuid"
+        "$.quantity":
+          faker: "number.int"
+          fakerArgs:
+            - min: 1
+              max: 5
+        "$.status":
+          oneOf: ["placed", "approved", "delivered", "cancelled"]
+        "$.complete":
+          faker: "datatype.boolean"
+        "$.totalPrice":
+          faker: "number.float"
+          fakerArgs:
+            - min: 9.99
+              max: 499.99
+              fractionDigits: 2
+        "$.createdAt":
+          faker: "date.past"
+          transform: "toISOString"
+        "$.shipDate":
+          faker: "date.between"
+          fakerArgs:
+            - from: "2024-01-01"
+              to: "2025-12-31"
+          transform: "toISOString"
+
+# GraphQL annotations — same data, same Faker calls
+graphql:
+  types:
+    Pet:
+      id:
+        faker: "string.uuid"
+      name:
+        custom: "./chameleon/generators/petName.ts"
+      status:
+        oneOf: ["available", "pending", "sold"]
+      species:
+        oneOf: ["dog", "cat", "rabbit", "bird", "fish", "reptile"]
+      breed:
+        faker: "animal.dog"
+      age:
+        faker: "number.int"
+        fakerArgs:
+          - min: 0
+            max: 18
+      weight:
+        faker: "number.float"
+        fakerArgs:
+          - min: 0.5
+            max: 80
+            fractionDigits: 1
+      photoUrl:
+        faker: "image.url"
+      description:
+        faker: "lorem.sentence"
+      createdAt:
+        faker: "date.past"
+        transform: "toISOString"
+
+    Order:
+      id:
+        faker: "string.uuid"
+      petId:
+        faker: "string.uuid"
+      quantity:
+        faker: "number.int"
+        fakerArgs:
+          - min: 1
+            max: 5
+      status:
+        oneOf: ["placed", "approved", "delivered", "cancelled"]
+      complete:
+        faker: "datatype.boolean"
+      totalPrice:
+        faker: "number.float"
+        fakerArgs:
+          - min: 9.99
+            max: 499.99
+            fractionDigits: 2
+      createdAt:
+        faker: "date.past"
+        transform: "toISOString"
+
+    Inventory:
+      available:
+        faker: "number.int"
+        fakerArgs:
+          - min: 10
+            max: 200
+      pending:
+        faker: "number.int"
+        fakerArgs:
+          - min: 0
+            max: 30
+      sold:
+        faker: "number.int"
+        fakerArgs:
+          - min: 50
+            max: 1000
+
+# Global inference overrides
+inferenceHints:
+  "*.id":        { faker: "string.uuid" }
+  "*.createdAt": { faker: "date.past", transform: "toISOString" }
+  "*.updatedAt": { faker: "date.recent", transform: "toISOString" }
+  "*.email":     { faker: "internet.email" }
+  "*.phone":     { faker: "phone.number" }

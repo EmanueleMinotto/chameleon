@@ -1,0 +1,14 @@
+{
+  "id": "00000000-0000-0000-0000-000000000001",
+  "name": "Buddy the Wonder Dog",
+  "status": "available",
+  "species": "dog",
+  "breed": "Golden Retriever",
+  "age": 3,
+  "weight": 28.5,
+  "photoUrl": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=400",
+  "description": "Buddy is our featured pet of the month! A friendly and energetic Golden Retriever who loves long walks and belly rubs. He's great with kids and other pets.",
+  "tags": ["featured", "friendly", "family-friendly", "trained"],
+  "featured": true,
+  "featuredSince": "2024-03-01T00:00:00Z"
+}

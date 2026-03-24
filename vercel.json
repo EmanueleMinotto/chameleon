@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "buildCommand": "pnpm install && pnpm build && pnpm --filter @chameleon/cli exec chameleon build --config chameleon/chameleon.config.ts",
+  "functions": {
+    "api/chameleon.ts": {
+      "maxDuration": 10,
+      "memory": 256
+    }
+  },
+  "routes": [
+    {
+      "src": "/_chameleon/(.*)",
+      "dest": "/api/chameleon"
+    },
+    {
+      "src": "/graphql",
+      "dest": "/api/chameleon"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/chameleon"
+    }
+  ]
+}

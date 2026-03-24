@@ -1,0 +1,28 @@
+{
+  "name": "@chameleon/vercel",
+  "version": "0.1.0",
+  "description": "Vercel serverless adapter for Chameleon",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean"
+  },
+  "dependencies": {
+    "@chameleon/core": "workspace:*",
+    "@chameleon/server": "workspace:*",
+    "hono": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vercel/node": "^3.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  }
+}

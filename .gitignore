@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.chameleon/
+*.tsbuildinfo
+.vercel/
+.env
+.env.local
+coverage/

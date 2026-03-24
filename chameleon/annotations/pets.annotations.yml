@@ -1,0 +1,103 @@
+version: 1
+
+# Annotations for /pets and /pets/{petId} endpoints.
+# These override the auto-inferred values from the OpenAPI schema.
+
+paths:
+  /pets:
+    get:
+      response:
+        # Root is an array — arrayLength controls how many items are generated
+        "$":
+          arrayLength: { min: 3, max: 8 }
+        "$.id":
+          faker: "string.uuid"
+        # name uses our custom generator (generators/petName.ts)
+        "$.name":
+          custom: "./chameleon/generators/petName.ts"
+        "$.status":
+          oneOf: ["available", "pending", "sold"]
+        "$.species":
+          oneOf: ["dog", "cat", "rabbit", "bird", "fish", "reptile"]
+        "$.breed":
+          faker: "animal.dog"
+        "$.age":
+          faker: "number.int"
+          fakerArgs:
+            - min: 0
+              max: 18
+        "$.weight":
+          faker: "number.float"
+          fakerArgs:
+            - min: 0.5
+              max: 80
+              fractionDigits: 1
+        "$.photoUrl":
+          faker: "image.url"
+        "$.description":
+          faker: "lorem.sentence"
+        "$.ownerId":
+          faker: "string.uuid"
+        "$.createdAt":
+          faker: "date.past"
+          transform: "toISOString"
+        "$.tags":
+          arrayLength: { min: 0, max: 4 }
+
+    post:
+      response:
+        "$.id":
+          faker: "string.uuid"
+        "$.name":
+          custom: "./chameleon/generators/petName.ts"
+        "$.status":
+          static: "available"
+        "$.createdAt":
+          faker: "date.recent"
+          transform: "toISOString"
+
+  /pets/featured:
+    get:
+      response:
+        # All fields generated normally — then deep-merged with data/featured-pet.json
+        # (the overlay is configured in chameleon.config.ts)
+        "$.id":
+          faker: "string.uuid"
+        "$.name":
+          custom: "./chameleon/generators/petName.ts"
+        "$.status":
+          static: "available"
+
+  /pets/{petId}:
+    get:
+      response:
+        "$.id":
+          faker: "string.uuid"
+        "$.name":
+          custom: "./chameleon/generators/petName.ts"
+        "$.status":
+          oneOf: ["available", "pending", "sold"]
+        "$.species":
+          oneOf: ["dog", "cat", "rabbit", "bird", "fish", "reptile"]
+        "$.breed":
+          faker: "animal.dog"
+        "$.age":
+          faker: "number.int"
+          fakerArgs:
+            - min: 0
+              max: 18
+        "$.weight":
+          faker: "number.float"
+          fakerArgs:
+            - min: 0.5
+              max: 80
+              fractionDigits: 1
+        "$.photoUrl":
+          faker: "image.url"
+        "$.description":
+          faker: "lorem.paragraph"
+        "$.ownerId":
+          faker: "string.uuid"
+        "$.createdAt":
+          faker: "date.past"
+          transform: "toISOString"

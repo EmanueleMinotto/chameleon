@@ -1,0 +1,100 @@
+"""
+Petstore GraphQL Schema — mirrors the REST API for demonstration purposes.
+Chameleon will generate fake data for all queries using the same annotation system.
+"""
+
+type Query {
+  """List all pets, optionally filtered by status"""
+  pets(status: PetStatus, limit: Int): [Pet!]!
+
+  """Get a single pet by its ID"""
+  pet(id: ID!): Pet
+
+  """Get the featured pet of the day"""
+  featuredPet: Pet
+
+  """Get store inventory counts"""
+  inventory: Inventory!
+
+  """Get an order by ID"""
+  order(id: ID!): Order
+}
+
+type Mutation {
+  """Add a new pet to the store"""
+  addPet(input: NewPetInput!): Pet!
+
+  """Place a new order"""
+  placeOrder(input: NewOrderInput!): Order!
+
+  """Delete a pet"""
+  deletePet(id: ID!): Boolean!
+}
+
+type Pet {
+  id: ID!
+  name: String!
+  status: PetStatus!
+  species: Species
+  breed: String
+  age: Int
+  weight: Float
+  photoUrl: String
+  description: String
+  ownerId: ID
+  createdAt: String
+  tags: [String!]
+}
+
+type Order {
+  id: ID!
+  petId: ID!
+  quantity: Int!
+  status: OrderStatus!
+  shipDate: String
+  complete: Boolean!
+  totalPrice: Float
+  createdAt: String
+}
+
+type Inventory {
+  available: Int!
+  pending: Int!
+  sold: Int!
+}
+
+input NewPetInput {
+  name: String!
+  status: PetStatus!
+  species: Species
+  breed: String
+  age: Int
+  photoUrl: String
+}
+
+input NewOrderInput {
+  petId: ID!
+  quantity: Int!
+}
+
+enum PetStatus {
+  available
+  pending
+  sold
+}
+
+enum Species {
+  dog
+  cat
+  rabbit
+  bird
+  fish
+  reptile
+}
+
+enum OrderStatus {
+  placed
+  approved
+  delivered
+  cancelled
+}

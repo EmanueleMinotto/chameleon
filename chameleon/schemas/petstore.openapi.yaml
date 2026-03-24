@@ -1,0 +1,289 @@
+openapi: "3.0.3"
+info:
+  title: Petstore API
+  description: >
+    Sample Petstore API — used to demonstrate all Chameleon features:
+    REST routes, path parameters, query strings, POST bodies, and more.
+  version: "1.0.0"
+
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+    description: "Real Petstore server (used when X-Chameleon-Mode: proxy)"
+
+tags:
+  - name: pets
+    description: Everything about your Pets
+  - name: store
+    description: Access to Petstore orders
+
+paths:
+  /pets:
+    get:
+      tags: [pets]
+      summary: List all pets
+      operationId: listPets
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [available, pending, sold]
+      responses:
+        "200":
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+
+    post:
+      tags: [pets]
+      summary: Add a new pet
+      operationId: addPet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewPet"
+      responses:
+        "201":
+          description: Pet created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+
+  /pets/featured:
+    get:
+      tags: [pets]
+      summary: Get the featured pet (static overlay example)
+      operationId: getFeaturedPet
+      responses:
+        "200":
+          description: The featured pet (overlaid with data/featured-pet.json)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+
+  /pets/{petId}:
+    get:
+      tags: [pets]
+      summary: Get a pet by ID
+      operationId: getPetById
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: A single pet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        "404":
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    delete:
+      tags: [pets]
+      summary: Delete a pet
+      operationId: deletePet
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Pet deleted
+
+  /store/inventory:
+    get:
+      tags: [store]
+      summary: Returns pet inventories by status
+      operationId: getInventory
+      responses:
+        "200":
+          description: Inventory counts by status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  available:
+                    type: integer
+                  pending:
+                    type: integer
+                  sold:
+                    type: integer
+
+  /store/orders:
+    post:
+      tags: [store]
+      summary: Place an order for a pet
+      operationId: placeOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewOrder"
+      responses:
+        "201":
+          description: Order placed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /store/orders/{orderId}:
+    get:
+      tags: [store]
+      summary: Get order by ID
+      operationId: getOrderById
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: An order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+components:
+  schemas:
+    Pet:
+      type: object
+      required: [id, name, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: The pet's name (uses custom generator)
+        status:
+          type: string
+          enum: [available, pending, sold]
+        species:
+          type: string
+          enum: [dog, cat, rabbit, bird, fish, reptile]
+        breed:
+          type: string
+        age:
+          type: integer
+          minimum: 0
+          maximum: 25
+        weight:
+          type: number
+          format: float
+          description: Weight in kilograms
+        photoUrl:
+          type: string
+          format: uri
+        description:
+          type: string
+        ownerId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+
+    NewPet:
+      type: object
+      required: [name, status]
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum: [available, pending, sold]
+        species:
+          type: string
+          enum: [dog, cat, rabbit, bird, fish, reptile]
+        breed:
+          type: string
+        age:
+          type: integer
+        photoUrl:
+          type: string
+          format: uri
+
+    Order:
+      type: object
+      required: [id, petId, status, quantity]
+      properties:
+        id:
+          type: string
+          format: uuid
+        petId:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum: [placed, approved, delivered, cancelled]
+        shipDate:
+          type: string
+          format: date-time
+        complete:
+          type: boolean
+        totalPrice:
+          type: number
+          format: float
+        createdAt:
+          type: string
+          format: date-time
+
+    NewOrder:
+      type: object
+      required: [petId, quantity]
+      properties:
+        petId:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+          minimum: 1
+
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
