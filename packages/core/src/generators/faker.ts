@@ -23,7 +23,9 @@ export function getFaker(): Faker {
 export function callFaker(annotation: FakerAnnotation, fakerInstance = _faker): unknown {
   const parts = annotation.faker.split(".");
   if (parts.length < 2) {
-    throw new Error(`Invalid faker path "${annotation.faker}". Expected format: "namespace.method"`);
+    throw new Error(
+      `Invalid faker path "${annotation.faker}". Expected format: "namespace.method"`,
+    );
   }
 
   // Navigate to the namespace

@@ -26,20 +26,20 @@ export function inferAnnotation(field: SchemaField): FieldAnnotation | null {
 
 function inferFromFormat(format: string): FieldAnnotation | null {
   const formatMap: Record<string, FieldAnnotation> = {
-    "email": { faker: "internet.email" },
-    "uuid": { faker: "string.uuid" },
+    email: { faker: "internet.email" },
+    uuid: { faker: "string.uuid" },
     "date-time": { faker: "date.past", transform: "toISOString" },
-    "date": { faker: "date.past", transform: "toISOString" },
-    "time": { faker: "date.past", transform: "toISOString" },
-    "uri": { faker: "internet.url" },
-    "url": { faker: "internet.url" },
-    "hostname": { faker: "internet.domainName" },
-    "ipv4": { faker: "internet.ipv4" },
-    "ipv6": { faker: "internet.ipv6" },
-    "password": { faker: "internet.password" },
-    "binary": { faker: "string.alphanumeric", fakerArgs: [{ length: 16 }] },
-    "byte": { faker: "string.alphanumeric", fakerArgs: [{ length: 8 }] },
-    "phone": { faker: "phone.number" },
+    date: { faker: "date.past", transform: "toISOString" },
+    time: { faker: "date.past", transform: "toISOString" },
+    uri: { faker: "internet.url" },
+    url: { faker: "internet.url" },
+    hostname: { faker: "internet.domainName" },
+    ipv4: { faker: "internet.ipv4" },
+    ipv6: { faker: "internet.ipv6" },
+    password: { faker: "internet.password" },
+    binary: { faker: "string.alphanumeric", fakerArgs: [{ length: 16 }] },
+    byte: { faker: "string.alphanumeric", fakerArgs: [{ length: 8 }] },
+    phone: { faker: "phone.number" },
   };
   return formatMap[format] ?? null;
 }
@@ -75,12 +75,23 @@ function inferFromName(name: string): FieldAnnotation | null {
     [/^currency$/i, { faker: "finance.currencyCode" }],
     [/^colou?r$/i, { faker: "color.human" }],
     [w("company|organization|org|employer"), { faker: "company.name" }],
-    [w("createdat|created_at|updatedat|updated_at|modifiedat|modified_at|deletedat|deleted_at|timestamp"), { faker: "date.past", transform: "toISOString" }],
+    [
+      w(
+        "createdat|created_at|updatedat|updated_at|modifiedat|modified_at|deletedat|deleted_at|timestamp",
+      ),
+      { faker: "date.past", transform: "toISOString" },
+    ],
     [/^date$/i, { faker: "date.past", transform: "toISOString" }],
     [/^age$/i, { faker: "number.int", fakerArgs: [{ min: 18, max: 90 }] }],
     [w("count|quantity|qty"), { faker: "number.int", fakerArgs: [{ min: 0, max: 100 }] }],
-    [w("score|rating|rank|points"), { faker: "number.float", fakerArgs: [{ min: 0, max: 5, fractionDigits: 1 }] }],
-    [w("token|secret|apikey|api_key"), { faker: "string.alphanumeric", fakerArgs: [{ length: 32 }] }],
+    [
+      w("score|rating|rank|points"),
+      { faker: "number.float", fakerArgs: [{ min: 0, max: 5, fractionDigits: 1 }] },
+    ],
+    [
+      w("token|secret|apikey|api_key"),
+      { faker: "string.alphanumeric", fakerArgs: [{ length: 32 }] },
+    ],
     [/^slug$/i, { faker: "helpers.slugify" }],
     [/^locale$|^lang$|^language$/i, { faker: "location.countryCode" }],
     [w("ipaddress|ip_address"), { faker: "internet.ipv4" }],
@@ -96,10 +107,15 @@ function inferFromName(name: string): FieldAnnotation | null {
 
 function inferFromType(type: SchemaField["type"]): FieldAnnotation | null {
   switch (type) {
-    case "string": return { faker: "lorem.word" };
-    case "number": return { faker: "number.float", fakerArgs: [{ min: 0, max: 1000, fractionDigits: 2 }] };
-    case "integer": return { faker: "number.int", fakerArgs: [{ min: 0, max: 1000 }] };
-    case "boolean": return { faker: "datatype.boolean" };
-    default: return null;
+    case "string":
+      return { faker: "lorem.word" };
+    case "number":
+      return { faker: "number.float", fakerArgs: [{ min: 0, max: 1000, fractionDigits: 2 }] };
+    case "integer":
+      return { faker: "number.int", fakerArgs: [{ min: 0, max: 1000 }] };
+    case "boolean":
+      return { faker: "datatype.boolean" };
+    default:
+      return null;
   }
 }

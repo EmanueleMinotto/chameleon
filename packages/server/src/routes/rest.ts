@@ -1,9 +1,5 @@
 import type { Context } from "hono";
-import type {
-  ChameleonRoute,
-  AnnotationMap,
-  ChameleonConfig,
-} from "@chameleon/core";
+import type { ChameleonRoute, AnnotationMap, ChameleonConfig } from "@chameleon/core";
 import { generateResponse } from "@chameleon/core";
 
 export interface RestHandlerOptions {
@@ -40,8 +36,8 @@ export async function handleRestRequest(
       requestMethod: method,
     });
 
-    const response = route.responses.find((r) => r.statusCode >= 200 && r.statusCode < 300)
-      ?? route.responses[0];
+    const response =
+      route.responses.find((r) => r.statusCode >= 200 && r.statusCode < 300) ?? route.responses[0];
     const statusCode = response?.statusCode ?? 200;
 
     return c.json(body, statusCode as 200);
@@ -60,9 +56,7 @@ export function matchRoute(
   path: string,
 ): ChameleonRoute | undefined {
   // Exact match first
-  const exact = routes.find(
-    (r) => r.method === method && r.path === path,
-  );
+  const exact = routes.find((r) => r.method === method && r.path === path);
   if (exact) return exact;
 
   // Template match: /pets/{id} matches /pets/123
@@ -73,8 +67,6 @@ export function matchRoute(
 }
 
 function pathMatchesTemplate(template: string, actual: string): boolean {
-  const pattern = template
-    .replace(/\{[^}]+\}/g, "[^/]+")
-    .replace(/\*/g, ".*");
+  const pattern = template.replace(/\{[^}]+\}/g, "[^/]+").replace(/\*/g, ".*");
   return new RegExp(`^${pattern}$`).test(actual);
 }

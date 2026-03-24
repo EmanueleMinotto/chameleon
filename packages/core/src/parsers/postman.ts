@@ -67,7 +67,7 @@ function collectItems(items: PostmanItem[], routes: ChameleonRoute[]): void {
 function extractPath(url: PostmanRequest["url"]): string | null {
   if (!url) return null;
 
-  const raw = typeof url === "string" ? url : url.raw ?? "";
+  const raw = typeof url === "string" ? url : (url.raw ?? "");
   if (!raw) return null;
 
   // Strip protocol + host, keep path
@@ -138,7 +138,8 @@ export function inferFieldsFromJson(value: unknown, path: string): SchemaField[]
   return [
     {
       path,
-      type: typeof value === "number" ? "number" : typeof value === "boolean" ? "boolean" : "string",
+      type:
+        typeof value === "number" ? "number" : typeof value === "boolean" ? "boolean" : "string",
       name,
       required: false,
       example: value,

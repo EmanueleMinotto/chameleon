@@ -56,8 +56,6 @@ describe("callFaker", () => {
   });
 
   it("throws on invalid path format (no dot)", () => {
-    expect(() => callFaker({ faker: "nodot" })).toThrow(
-      /Expected format/,
-    );
+    expect(() => callFaker({ faker: "nodot" })).toThrow(/Expected format/);
   });
 });

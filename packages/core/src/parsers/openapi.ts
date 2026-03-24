@@ -113,12 +113,7 @@ export function schemaToFields(
     if (properties) {
       for (const [propName, propSchema] of Object.entries(properties)) {
         const propPath = `${basePath}.${propName}`;
-        const subFields = schemaToFields(
-          propSchema,
-          propPath,
-          requiredFields,
-          propName,
-        );
+        const subFields = schemaToFields(propSchema, propPath, requiredFields, propName);
         fields.push(...subFields);
       }
     }
@@ -164,13 +159,21 @@ export function schemaToFields(
 function mapType(type: string | string[] | undefined): SchemaFieldType {
   const t = Array.isArray(type) ? type[0] : type;
   switch (t) {
-    case "string": return "string";
-    case "number": return "number";
-    case "integer": return "integer";
-    case "boolean": return "boolean";
-    case "object": return "object";
-    case "array": return "array";
-    case "null": return "null";
-    default: return "unknown";
+    case "string":
+      return "string";
+    case "number":
+      return "number";
+    case "integer":
+      return "integer";
+    case "boolean":
+      return "boolean";
+    case "object":
+      return "object";
+    case "array":
+      return "array";
+    case "null":
+      return "null";
+    default:
+      return "unknown";
   }
 }

@@ -30,8 +30,7 @@ export async function generateResponse(options: GeneratePipelineOptions): Promis
 
   // Pick the primary response (first 2xx or first available)
   const response =
-    route.responses.find((r) => r.statusCode >= 200 && r.statusCode < 300) ??
-    route.responses[0];
+    route.responses.find((r) => r.statusCode >= 200 && r.statusCode < 300) ?? route.responses[0];
 
   if (!response) return {};
 
@@ -138,7 +137,9 @@ async function generateArray(
   staticData: Record<string, unknown>,
 ): Promise<unknown[]> {
   const faker = getFaker();
-  const arrayAnnotation = annotation as (FieldAnnotation & { arrayLength?: { min: number; max: number } }) | null;
+  const arrayAnnotation = annotation as
+    | (FieldAnnotation & { arrayLength?: { min: number; max: number } })
+    | null;
   const min = arrayAnnotation?.arrayLength?.min ?? 1;
   const max = arrayAnnotation?.arrayLength?.max ?? 5;
   const length = faker.number.int({ min, max });
@@ -150,11 +151,7 @@ async function generateArray(
       const itemValue = await generateValue(field.items, route, annotations, staticData);
       items.push(itemValue);
     } else if (annotation) {
-      const value = await applyAnnotation(
-        annotation,
-        { faker, schemaField: field },
-        staticData,
-      );
+      const value = await applyAnnotation(annotation, { faker, schemaField: field }, staticData);
       items.push(value);
     } else {
       items.push(faker.lorem.word());
@@ -199,8 +196,8 @@ async function applyOverlays(
   let result = generated;
 
   for (const overlay of overlays) {
-    const pathMatches = overlay.path === requestPath ||
-      matchPathTemplate(overlay.path, requestPath);
+    const pathMatches =
+      overlay.path === requestPath || matchPathTemplate(overlay.path, requestPath);
     const methodMatches = overlay.method.toUpperCase() === requestMethod.toUpperCase();
 
     if (!pathMatches || !methodMatches) continue;
@@ -242,13 +239,21 @@ function matchPathTemplate(template: string, actual: string): boolean {
 
 function getDefaultForType(type: SchemaField["type"]): unknown {
   switch (type) {
-    case "string": return "";
-    case "number": return 0;
-    case "integer": return 0;
-    case "boolean": return false;
-    case "object": return {};
-    case "array": return [];
-    case "null": return null;
-    default: return null;
+    case "string":
+      return "";
+    case "number":
+      return 0;
+    case "integer":
+      return 0;
+    case "boolean":
+      return false;
+    case "object":
+      return {};
+    case "array":
+      return [];
+    case "null":
+      return null;
+    default:
+      return null;
   }
 }

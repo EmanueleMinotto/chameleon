@@ -9,10 +9,5 @@
       "@chameleon/server": ["packages/server/src/index.ts"]
     }
   },
-  "include": [
-    "vitest.config.ts",
-    "eslint.config.mjs",
-    "api/**/*.ts",
-    "chameleon/**/*.ts"
-  ]
+  "include": ["vitest.config.ts", "eslint.config.mjs", "api/**/*.ts", "chameleon/**/*.ts"]
 }

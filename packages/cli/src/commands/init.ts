@@ -112,11 +112,7 @@ export async function runInit(_options: InitOptions): Promise<void> {
   consola.success("Created chameleon/chameleon.config.ts");
 
   // Write starter annotations
-  await writeFile(
-    "chameleon/annotations/example.annotations.yml",
-    ANNOTATIONS_TEMPLATE,
-    "utf-8",
-  );
+  await writeFile("chameleon/annotations/example.annotations.yml", ANNOTATIONS_TEMPLATE, "utf-8");
   consola.success("Created chameleon/annotations/example.annotations.yml");
 
   // Write generator example

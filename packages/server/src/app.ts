@@ -2,12 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { randomUUID } from "node:crypto";
-import type {
-  ChameleonRoute,
-  AnnotationMap,
-  Manifest,
-  ChameleonConfig,
-} from "@chameleon/core";
+import type { ChameleonRoute, AnnotationMap, Manifest, ChameleonConfig } from "@chameleon/core";
 import { configureFaker, warmStaticCache, loadGeneratorsBundle } from "@chameleon/core";
 import { modeSwitchMiddleware } from "./middleware/mode-switch.js";
 import { handleRestRequest } from "./routes/rest.js";
@@ -61,9 +56,7 @@ export function createApp(options: AppOptions): Hono {
   // ── Hoppscotch explorer ───────────────────────────────────────────────────
   if (config.hoppscotch) {
     const { path: hoppPath, title } = config.hoppscotch;
-    app.get(hoppPath, (c) =>
-      handleHoppscotchPage(c, routes, title, hoppPath),
-    );
+    app.get(hoppPath, (c) => handleHoppscotchPage(c, routes, title, hoppPath));
     app.get(`${hoppPath}/collection.json`, (c) => {
       const baseUrl = new URL(c.req.url).origin;
       return handleHoppscotchCollection(c, routes, title, baseUrl);
@@ -83,9 +76,7 @@ export function createApp(options: AppOptions): Hono {
   }
 
   // ── REST catch-all ─────────────────────────────────────────────────────────
-  app.all("*", async (c) =>
-    handleRestRequest(c, { routes, annotations, staticData, config }),
-  );
+  app.all("*", async (c) => handleRestRequest(c, { routes, annotations, staticData, config }));
 
   return app;
 }

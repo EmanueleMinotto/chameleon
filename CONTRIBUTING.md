@@ -7,6 +7,7 @@ Thank you for your interest in contributing! Please read this guide before openi
 All commits **must** follow the [Conventional Commits](https://www.conventionalcommits.org/) specification. PRs with non-conforming commit messages will not be merged.
 
 **Format:**
+
 ```
 <type>(<scope>): <description>
 
@@ -16,26 +17,27 @@ All commits **must** follow the [Conventional Commits](https://www.conventionalc
 
 **Allowed types:**
 
-| Type | When to use |
-|---|---|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation only |
-| `chore` | Build, tooling, CI changes |
+| Type       | When to use                                             |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | New feature                                             |
+| `fix`      | Bug fix                                                 |
+| `docs`     | Documentation only                                      |
+| `chore`    | Build, tooling, CI changes                              |
 | `refactor` | Code change that neither fixes a bug nor adds a feature |
-| `test` | Adding or fixing tests |
-| `perf` | Performance improvement |
+| `test`     | Adding or fixing tests                                  |
+| `perf`     | Performance improvement                                 |
 
 **Allowed scopes** (optional):
 
-| Scope | Package |
-|---|---|
-| `core` | `@chameleon/core` |
+| Scope    | Package             |
+| -------- | ------------------- |
+| `core`   | `@chameleon/core`   |
 | `server` | `@chameleon/server` |
-| `cli` | `@chameleon/cli` |
+| `cli`    | `@chameleon/cli`    |
 | `vercel` | `@chameleon/vercel` |
 
 **Examples:**
+
 ```
 feat(core): add Pact parser
 fix(server): handle empty response schema gracefully
@@ -80,6 +82,7 @@ pnpm format
 ```
 
 Linting uses **ESLint** with `@typescript-eslint` and **Prettier**. Configuration files:
+
 - [`eslint.config.mjs`](eslint.config.mjs)
 - [`.prettierrc.json`](.prettierrc.json)
 
@@ -94,6 +97,7 @@ pnpm test
 Tests use **Vitest** and live alongside source files as `*.test.ts` files.
 
 **Coverage requirements:**
+
 - New parsers: test at least 3 example schema shapes
 - New generators: test the happy path and an edge case (empty field, missing annotation)
 - New annotation resolvers: test exact match, pattern match, and inference fallback

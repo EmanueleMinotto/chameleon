@@ -15,7 +15,9 @@ interface ServeOptions {
 
 export async function runServe(options: ServeOptions): Promise<void> {
   const config = await loadConfig(options.config, {
-    ...(options.port ? { server: { port: Number(options.port) } } as Partial<ChameleonConfig> : {}),
+    ...(options.port
+      ? ({ server: { port: Number(options.port) } } as Partial<ChameleonConfig>)
+      : {}),
     ...(options.seed ? { fakerSeed: Number(options.seed) } : {}),
   });
 

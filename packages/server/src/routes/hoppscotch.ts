@@ -45,11 +45,7 @@ function buildCollection(
   return { v: 1, name: title, folders: [], requests };
 }
 
-function buildHtml(
-  title: string,
-  collectionUrl: string,
-  routes: ChameleonRoute[],
-): string {
+function buildHtml(title: string, collectionUrl: string, routes: ChameleonRoute[]): string {
   const restRoutes = routes.filter((r) => r.source !== "graphql");
   const rows = restRoutes
     .map(

@@ -21,7 +21,10 @@ export async function parseAll(schemas: ChameleonConfig["schemas"]): Promise<Par
 
   const tasks: Array<() => Promise<void>> = [];
 
-  const add = (paths: string | string[] | undefined, fn: (p: string) => Promise<ChameleonRoute[]>) => {
+  const add = (
+    paths: string | string[] | undefined,
+    fn: (p: string) => Promise<ChameleonRoute[]>,
+  ) => {
     if (!paths) return;
     const list = Array.isArray(paths) ? paths : [paths];
     for (const p of list) {

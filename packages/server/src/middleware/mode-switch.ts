@@ -40,9 +40,7 @@ export function modeSwitchMiddleware(options: ModeSwitchOptions) {
     for (const rule of federation) {
       if (pathMatchesPattern(c.req.path, rule.match)) {
         const upstream = expandEnvVars(rule.upstream);
-        const targetPath = rule.stripPrefix
-          ? c.req.path.replace(rule.stripPrefix, "")
-          : c.req.path;
+        const targetPath = rule.stripPrefix ? c.req.path.replace(rule.stripPrefix, "") : c.req.path;
 
         return forwardRequest(c, upstream, targetPath, instanceId);
       }

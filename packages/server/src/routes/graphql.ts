@@ -2,11 +2,7 @@ import type { Context } from "hono";
 import { buildSchema, type GraphQLSchema } from "graphql";
 import { readFile } from "node:fs/promises";
 
-import type {
-  ChameleonRoute,
-  AnnotationMap,
-  ChameleonConfig,
-} from "@chameleon/core";
+import type { ChameleonRoute, AnnotationMap, ChameleonConfig } from "@chameleon/core";
 import { generateResponse } from "@chameleon/core";
 
 export interface GraphQLHandlerOptions {

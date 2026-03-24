@@ -11,16 +11,16 @@ Open-source mock/faker server — generate realistic API responses from your exi
 
 ## Features
 
-| Feature | Description |
-|---|---|
-| **Multi-schema support** | OpenAPI v2/v3, GraphQL SDL, Postman Collections, Pact contracts, static JSON |
-| **Annotation system** | Separate YAML files map schema fields to specific Faker.js methods or custom TypeScript generators |
-| **Auto-inference** | Missing annotations are inferred from field type, format, and name |
-| **Static overlays** | Deep-merge static JSON files on top of generated responses |
-| **Proxy mode** | One HTTP header switches between mock and a real upstream server |
-| **Federation** | Delegate specific routes to other Chameleon instances |
-| **Vercel deploy** | One-click deploy — `chameleon build` pre-compiles everything for cold-start efficiency |
-| **Hot reload** | `--watch` mode reloads schemas and annotations without restarting the server |
+| Feature                  | Description                                                                                        |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| **Multi-schema support** | OpenAPI v2/v3, GraphQL SDL, Postman Collections, Pact contracts, static JSON                       |
+| **Annotation system**    | Separate YAML files map schema fields to specific Faker.js methods or custom TypeScript generators |
+| **Auto-inference**       | Missing annotations are inferred from field type, format, and name                                 |
+| **Static overlays**      | Deep-merge static JSON files on top of generated responses                                         |
+| **Proxy mode**           | One HTTP header switches between mock and a real upstream server                                   |
+| **Federation**           | Delegate specific routes to other Chameleon instances                                              |
+| **Vercel deploy**        | One-click deploy — `chameleon build` pre-compiles everything for cold-start efficiency             |
+| **Hot reload**           | `--watch` mode reloads schemas and annotations without restarting the server                       |
 
 ---
 
@@ -49,6 +49,7 @@ pnpm dev
 Your mock server is now running at **http://localhost:3000**.
 
 Try it:
+
 ```bash
 # Get a list of fake pets
 curl http://localhost:3000/pets
@@ -118,7 +119,7 @@ The annotation system is **separate from your schemas** — you never modify the
 Multiple annotation files are **deep-merged** in alphabetical order. Use a glob in your config:
 
 ```typescript
-annotations: "./chameleon/annotations/**/*.annotations.yml"
+annotations: "./chameleon/annotations/**/*.annotations.yml";
 ```
 
 ### Annotation syntax
@@ -175,8 +176,8 @@ graphql:
 
 # Global inference overrides
 inferenceHints:
-  "*.email":  { faker: "internet.email" }
-  "*.phone":  { faker: "phone.number" }
+  "*.email": { faker: "internet.email" }
+  "*.phone": { faker: "phone.number" }
 ```
 
 ### Custom generators
@@ -193,6 +194,7 @@ export default function ({ faker, schemaField }: GeneratorContext): string {
 ```
 
 Then reference it in annotations:
+
 ```yaml
 "$.name":
   custom: "./chameleon/generators/myName.ts"
@@ -213,6 +215,7 @@ proxy: {
 ```
 
 Then switch modes per-request:
+
 ```bash
 # Mock response (default)
 curl http://localhost:3000/users
@@ -230,8 +233,8 @@ Delegate specific routes to other Chameleon instances:
 ```typescript
 federation: [
   { match: "/payments/**", upstream: "https://payments-mock.vercel.app" },
-  { match: "/users/**",    upstream: "http://localhost:3001" },
-]
+  { match: "/users/**", upstream: "http://localhost:3001" },
+];
 ```
 
 Chameleon handles loop prevention automatically via the `X-Chameleon-Forwarded-By` header.
@@ -247,6 +250,7 @@ This repository is pre-configured for Vercel. The `vercel.json` `buildCommand` r
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/EmanueleMinotto/chameleon)
 
 **Manual deploy:**
+
 ```bash
 pnpm build                 # build all packages
 pnpm chameleon build       # compile schemas → .chameleon/manifest.json
@@ -254,6 +258,7 @@ vercel deploy
 ```
 
 The `chameleon build` command:
+
 1. Parses all schema files
 2. Merges annotation files
 3. Bundles custom generator `.ts` files with esbuild
@@ -269,11 +274,11 @@ import { defineConfig } from "@chameleon/core";
 
 export default defineConfig({
   schemas: {
-    openapi:  "./chameleon/schemas/api.openapi.yaml",   // string or string[]
-    graphql:  "./chameleon/schemas/schema.graphql",
-    postman:  "./chameleon/schemas/collection.json",
-    pact:     "./chameleon/schemas/",                   // directory of .json files
-    static:   "./chameleon/data/",                      // directory of JSON files
+    openapi: "./chameleon/schemas/api.openapi.yaml", // string or string[]
+    graphql: "./chameleon/schemas/schema.graphql",
+    postman: "./chameleon/schemas/collection.json",
+    pact: "./chameleon/schemas/", // directory of .json files
+    static: "./chameleon/data/", // directory of JSON files
   },
   annotations: "./chameleon/annotations/**/*.annotations.yml",
   server: {
@@ -281,15 +286,13 @@ export default defineConfig({
     host: "0.0.0.0",
     corsOrigins: "*",
   },
-  fakerSeed: null,     // null = random; number = deterministic
+  fakerSeed: null, // null = random; number = deterministic
   proxy: {
     upstream: "https://api.example.com",
     modeHeader: "X-Chameleon-Mode",
     proxyValue: "proxy",
   },
-  federation: [
-    { match: "/payments/**", upstream: "https://payments-mock.vercel.app" },
-  ],
+  federation: [{ match: "/payments/**", upstream: "https://payments-mock.vercel.app" }],
   overlays: [
     { path: "/users/me", method: "GET", file: "./chameleon/data/me.json", strategy: "deep-merge" },
   ],
@@ -299,14 +302,14 @@ export default defineConfig({
 
 ### Environment variables
 
-| Variable | Description |
-|---|---|
-| `CHAMELEON_PORT` | Server port (overrides config) |
-| `CHAMELEON_HOST` | Server host |
-| `CHAMELEON_UPSTREAM_URL` | Proxy upstream URL |
-| `CHAMELEON_MODE_HEADER` | Header name for proxy switching |
-| `CHAMELEON_FAKER_SEED` | Faker seed |
-| `CHAMELEON_CONFIG` | Path to config file |
+| Variable                 | Description                     |
+| ------------------------ | ------------------------------- |
+| `CHAMELEON_PORT`         | Server port (overrides config)  |
+| `CHAMELEON_HOST`         | Server host                     |
+| `CHAMELEON_UPSTREAM_URL` | Proxy upstream URL              |
+| `CHAMELEON_MODE_HEADER`  | Header name for proxy switching |
+| `CHAMELEON_FAKER_SEED`   | Faker seed                      |
+| `CHAMELEON_CONFIG`       | Path to config file             |
 
 ---
 

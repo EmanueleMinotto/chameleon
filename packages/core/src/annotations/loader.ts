@@ -8,9 +8,7 @@ import type { AnnotationMap } from "../schema/types.js";
  * Loads and deep-merges all annotation files matching the given pattern(s).
  * Accepts a string path, glob pattern, or array of paths/globs.
  */
-export async function loadAnnotations(
-  patterns: string | string[],
-): Promise<AnnotationMap> {
+export async function loadAnnotations(patterns: string | string[]): Promise<AnnotationMap> {
   const list = Array.isArray(patterns) ? patterns : [patterns];
 
   // Expand globs; non-glob paths are returned as-is if they exist

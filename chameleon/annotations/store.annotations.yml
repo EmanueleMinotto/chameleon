@@ -162,8 +162,8 @@ graphql:
 
 # Global inference overrides
 inferenceHints:
-  "*.id":        { faker: "string.uuid" }
+  "*.id": { faker: "string.uuid" }
   "*.createdAt": { faker: "date.past", transform: "toISOString" }
   "*.updatedAt": { faker: "date.recent", transform: "toISOString" }
-  "*.email":     { faker: "internet.email" }
-  "*.phone":     { faker: "phone.number" }
+  "*.email": { faker: "internet.email" }
+  "*.phone": { faker: "phone.number" }

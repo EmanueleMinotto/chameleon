@@ -127,18 +127,25 @@ function isNonNull(type: GraphQLOutputType): boolean {
 
 function scalarToFieldType(scalar: GraphQLScalarType): SchemaFieldType {
   switch (scalar.name) {
-    case "Int": return "integer";
-    case "Float": return "number";
-    case "Boolean": return "boolean";
+    case "Int":
+      return "integer";
+    case "Float":
+      return "number";
+    case "Boolean":
+      return "boolean";
     case "ID":
-    case "String": return "string";
-    default: return "string";
+    case "String":
+      return "string";
+    default:
+      return "string";
   }
 }
 
 function scalarToFormat(scalar: GraphQLScalarType): string | undefined {
   switch (scalar.name) {
-    case "ID": return "uuid";
-    default: return undefined;
+    case "ID":
+      return "uuid";
+    default:
+      return undefined;
   }
 }
