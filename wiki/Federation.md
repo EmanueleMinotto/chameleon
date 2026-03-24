@@ -23,16 +23,16 @@ export default defineConfig({
   },
   federation: [
     {
-      match:    "/payments/**",
+      match: "/payments/**",
       upstream: "https://payments-mock.vercel.app",
     },
     {
-      match:    "/users/**",
+      match: "/users/**",
       upstream: "http://localhost:3001",
     },
     {
-      match:       "/legacy/v1/**",
-      upstream:    "http://localhost:3002",
+      match: "/legacy/v1/**",
+      upstream: "http://localhost:3002",
       stripPrefix: "/legacy/v1",
     },
   ],
@@ -41,12 +41,12 @@ export default defineConfig({
 
 ### Entry options
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `match` | `string` | — | Glob pattern matched against the request path |
-| `upstream` | `string` | — | Base URL of the upstream Chameleon instance |
-| `passHeaders` | `boolean` | `true` | Forward original request headers to the upstream |
-| `stripPrefix` | `string` | — | Strip this prefix from the path before forwarding |
+| Option        | Type      | Default | Description                                       |
+| ------------- | --------- | ------- | ------------------------------------------------- |
+| `match`       | `string`  | —       | Glob pattern matched against the request path     |
+| `upstream`    | `string`  | —       | Base URL of the upstream Chameleon instance       |
+| `passHeaders` | `boolean` | `true`  | Forward original request headers to the upstream  |
+| `stripPrefix` | `string`  | —       | Strip this prefix from the path before forwarding |
 
 ---
 
@@ -54,10 +54,10 @@ export default defineConfig({
 
 Patterns use [minimatch](https://github.com/isaacs/minimatch) glob syntax:
 
-| Pattern | Matches |
-|---|---|
-| `/payments/**` | Any path starting with `/payments/` |
-| `/users/*/orders` | `/users/42/orders`, `/users/alice/orders` |
+| Pattern              | Matches                                        |
+| -------------------- | ---------------------------------------------- |
+| `/payments/**`       | Any path starting with `/payments/`            |
+| `/users/*/orders`    | `/users/42/orders`, `/users/alice/orders`      |
 | `/v2/{api,admin}/**` | Paths starting with `/v2/api/` or `/v2/admin/` |
 
 Rules are evaluated in order — the first matching rule wins. Unmatched requests are handled locally (mocked or proxied).
@@ -102,7 +102,7 @@ Gateway config:
 // chameleon/chameleon.config.ts (gateway)
 export default defineConfig({
   federation: [
-    { match: "/users/**",  upstream: "http://localhost:3001" },
+    { match: "/users/**", upstream: "http://localhost:3001" },
     { match: "/orders/**", upstream: "http://localhost:3002" },
   ],
 });

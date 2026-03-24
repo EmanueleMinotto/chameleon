@@ -42,7 +42,7 @@ Place your schema files here. Chameleon supports multiple schemas simultaneously
 YAML files that control how fake data is generated for each field. You can split annotations across multiple files — they are deep-merged in alphabetical order. Glob patterns are supported in the config:
 
 ```typescript
-annotations: "./chameleon/annotations/**/*.annotations.yml"
+annotations: "./chameleon/annotations/**/*.annotations.yml";
 ```
 
 See [Annotations](Annotations) for the full syntax.

@@ -11,30 +11,30 @@ Chameleon is an open-source mock/faker server that generates realistic API respo
 
 ## Feature overview
 
-| Feature | Description |
-|---|---|
-| **Multi-schema support** | OpenAPI v2/v3, GraphQL SDL, Postman Collections, Pact contracts, static JSON |
-| **Annotation system** | YAML files map schema fields to Faker.js methods or custom TypeScript generators |
-| **Auto-inference** | Missing annotations are inferred from field type, format, and name |
-| **Static overlays** | Deep-merge static JSON files on top of generated responses |
-| **Proxy mode** | One HTTP header switches between mock and a real upstream server |
-| **Federation** | Delegate specific routes to other Chameleon instances |
-| **Hoppscotch explorer** | Built-in endpoint browser, importable into Hoppscotch with one click |
-| **Vercel deploy** | One-click deploy — `chameleon build` pre-compiles everything for cold-start efficiency |
-| **Hot reload** | `--watch` mode reloads schemas and annotations without restarting the server |
+| Feature                  | Description                                                                            |
+| ------------------------ | -------------------------------------------------------------------------------------- |
+| **Multi-schema support** | OpenAPI v2/v3, GraphQL SDL, Postman Collections, Pact contracts, static JSON           |
+| **Annotation system**    | YAML files map schema fields to Faker.js methods or custom TypeScript generators       |
+| **Auto-inference**       | Missing annotations are inferred from field type, format, and name                     |
+| **Static overlays**      | Deep-merge static JSON files on top of generated responses                             |
+| **Proxy mode**           | One HTTP header switches between mock and a real upstream server                       |
+| **Federation**           | Delegate specific routes to other Chameleon instances                                  |
+| **Hoppscotch explorer**  | Built-in endpoint browser, importable into Hoppscotch with one click                   |
+| **Vercel deploy**        | One-click deploy — `chameleon build` pre-compiles everything for cold-start efficiency |
+| **Hot reload**           | `--watch` mode reloads schemas and annotations without restarting the server           |
 
 ## Documentation
 
-| Page | Description |
-|---|---|
-| [Getting Started](Getting-Started) | Requirements, installation, and first run |
-| [Project Structure](Project-Structure) | Directory layout and file conventions |
-| [Schemas](Schemas) | Supported schema formats and how to configure them |
-| [Annotations](Annotations) | Full annotation syntax and custom generators |
-| [Configuration](Configuration) | `chameleon.config.ts` reference and environment variables |
-| [Proxy Mode](Proxy-Mode) | Switching between mock and a real upstream API |
-| [Federation](Federation) | Delegating routes to other Chameleon instances |
-| [Overlays](Overlays) | Merging static JSON on top of generated responses |
-| [Hoppscotch](Hoppscotch) | Built-in API explorer integration |
-| [Vercel Deployment](Vercel) | Deploying to Vercel |
-| [CLI Reference](CLI) | All CLI commands and flags |
+| Page                                   | Description                                               |
+| -------------------------------------- | --------------------------------------------------------- |
+| [Getting Started](Getting-Started)     | Requirements, installation, and first run                 |
+| [Project Structure](Project-Structure) | Directory layout and file conventions                     |
+| [Schemas](Schemas)                     | Supported schema formats and how to configure them        |
+| [Annotations](Annotations)             | Full annotation syntax and custom generators              |
+| [Configuration](Configuration)         | `chameleon.config.ts` reference and environment variables |
+| [Proxy Mode](Proxy-Mode)               | Switching between mock and a real upstream API            |
+| [Federation](Federation)               | Delegating routes to other Chameleon instances            |
+| [Overlays](Overlays)                   | Merging static JSON on top of generated responses         |
+| [Hoppscotch](Hoppscotch)               | Built-in API explorer integration                         |
+| [Vercel Deployment](Vercel)            | Deploying to Vercel                                       |
+| [CLI Reference](CLI)                   | All CLI commands and flags                                |

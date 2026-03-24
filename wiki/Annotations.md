@@ -67,7 +67,7 @@ Pass arguments to the Faker.js method. Each item in `fakerArgs` is spread as a p
 "$.bio":
   faker: "lorem.paragraphs"
   fakerArgs:
-    - 2         # count
+    - 2 # count
 
 "$.date":
   faker: "date.between"
@@ -112,9 +112,9 @@ export default function ({ faker, schemaField }: GeneratorContext): string {
 
 The `GeneratorContext` includes:
 
-| Property | Type | Description |
-|---|---|---|
-| `faker` | `Faker` | The configured Faker.js instance |
+| Property      | Type          | Description                                         |
+| ------------- | ------------- | --------------------------------------------------- |
+| `faker`       | `Faker`       | The configured Faker.js instance                    |
 | `schemaField` | `SchemaField` | Metadata about the field (name, type, format, path) |
 
 ### `static` — Literal value or JSON file
@@ -160,7 +160,7 @@ Set the minimum and maximum number of items generated for an array field.
 "$.items":
   arrayLength:
     min: 10
-    max: 10   # exact length
+    max: 10 # exact length
 ```
 
 ---
@@ -212,11 +212,11 @@ graphql:
 
 ```yaml
 inferenceHints:
-  "*.email":     { faker: "internet.email" }
-  "*.phone":     { faker: "phone.number" }
+  "*.email": { faker: "internet.email" }
+  "*.phone": { faker: "phone.number" }
   "*.firstName": { faker: "person.firstName" }
-  "*.lastName":  { faker: "person.lastName" }
-  "*.avatar":    { faker: "image.avatar" }
+  "*.lastName": { faker: "person.lastName" }
+  "*.avatar": { faker: "image.avatar" }
   "*.createdAt": { faker: "date.past", transform: "toISOString" }
   "*.updatedAt": { faker: "date.recent", transform: "toISOString" }
 ```
@@ -239,7 +239,7 @@ All annotation files matched by the glob in your config are deep-merged. Later f
 
 ```typescript
 // chameleon.config.ts
-annotations: "./chameleon/annotations/**/*.annotations.yml"
+annotations: "./chameleon/annotations/**/*.annotations.yml";
 ```
 
 This lets you split annotations by domain:

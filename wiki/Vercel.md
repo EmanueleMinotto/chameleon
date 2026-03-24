@@ -69,11 +69,11 @@ All requests are rewritten to the `api/chameleon.ts` serverless function, which 
 
 Set these in your Vercel project settings (or via `vercel env add`) to override config values at runtime:
 
-| Variable | Description |
-|---|---|
+| Variable                 | Description                              |
+| ------------------------ | ---------------------------------------- |
 | `CHAMELEON_UPSTREAM_URL` | Enable proxy mode pointing to a real API |
-| `CHAMELEON_MODE_HEADER` | Custom header name for proxy switching |
-| `CHAMELEON_FAKER_SEED` | Fixed seed for deterministic responses |
+| `CHAMELEON_MODE_HEADER`  | Custom header name for proxy switching   |
+| `CHAMELEON_FAKER_SEED`   | Fixed seed for deterministic responses   |
 
 ---
 

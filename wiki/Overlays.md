@@ -23,15 +23,15 @@ export default defineConfig({
   },
   overlays: [
     {
-      path:     "/users/me",
-      method:   "GET",
-      file:     "./chameleon/data/me.json",
+      path: "/users/me",
+      method: "GET",
+      file: "./chameleon/data/me.json",
       strategy: "deep-merge",
     },
     {
-      path:     "/pets/featured",
-      method:   "GET",
-      file:     "./chameleon/data/featured-pet.json",
+      path: "/pets/featured",
+      method: "GET",
+      file: "./chameleon/data/featured-pet.json",
       strategy: "replace",
     },
   ],
@@ -40,12 +40,12 @@ export default defineConfig({
 
 ### Entry options
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `path` | `string` | — | Exact request path to match |
-| `method` | `string` | — | HTTP method (case-insensitive) |
-| `file` | `string` | — | Path to a JSON file |
-| `strategy` | `"deep-merge" \| "replace"` | `"deep-merge"` | How to apply the overlay |
+| Option     | Type                        | Default        | Description                    |
+| ---------- | --------------------------- | -------------- | ------------------------------ |
+| `path`     | `string`                    | —              | Exact request path to match    |
+| `method`   | `string`                    | —              | HTTP method (case-insensitive) |
+| `file`     | `string`                    | —              | Path to a JSON file            |
+| `strategy` | `"deep-merge" \| "replace"` | `"deep-merge"` | How to apply the overlay       |
 
 ---
 

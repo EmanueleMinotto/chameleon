@@ -19,15 +19,15 @@ export default defineConfig({
     openapi: "./chameleon/schemas/api.openapi.yaml",
   },
   hoppscotch: {
-    path:  "/_hoppscotch",        // default
-    title: "My API Explorer",     // default: "Chameleon API Explorer"
+    path: "/_hoppscotch", // default
+    title: "My API Explorer", // default: "Chameleon API Explorer"
   },
 });
 ```
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `path` | `string` | `"/_hoppscotch"` | URL path where the explorer is served |
+| Option  | Type     | Default                    | Description                                           |
+| ------- | -------- | -------------------------- | ----------------------------------------------------- |
+| `path`  | `string` | `"/_hoppscotch"`           | URL path where the explorer is served                 |
 | `title` | `string` | `"Chameleon API Explorer"` | Title shown on the landing page and in the collection |
 
 Omit the `hoppscotch` key entirely to disable the explorer.

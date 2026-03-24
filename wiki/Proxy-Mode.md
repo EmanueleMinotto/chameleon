@@ -22,18 +22,18 @@ export default defineConfig({
     openapi: "./chameleon/schemas/api.openapi.yaml",
   },
   proxy: {
-    upstream:   "https://api.example.com",
-    modeHeader: "X-Chameleon-Mode",   // default
-    proxyValue: "proxy",              // default
+    upstream: "https://api.example.com",
+    modeHeader: "X-Chameleon-Mode", // default
+    proxyValue: "proxy", // default
   },
 });
 ```
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `upstream` | `string` | — | Base URL of the real API |
+| Option       | Type     | Default              | Description                                    |
+| ------------ | -------- | -------------------- | ---------------------------------------------- |
+| `upstream`   | `string` | —                    | Base URL of the real API                       |
 | `modeHeader` | `string` | `"X-Chameleon-Mode"` | HTTP header Chameleon reads to decide the mode |
-| `proxyValue` | `string` | `"proxy"` | Header value that activates passthrough |
+| `proxyValue` | `string` | `"proxy"`            | Header value that activates passthrough        |
 
 ---
 

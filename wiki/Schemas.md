@@ -12,8 +12,8 @@ export default defineConfig({
     openapi: "./chameleon/schemas/api.openapi.yaml",
     graphql: "./chameleon/schemas/schema.graphql",
     postman: "./chameleon/schemas/collection.postman.json",
-    pact:    "./chameleon/schemas/pacts/",
-    static:  "./chameleon/data/",
+    pact: "./chameleon/schemas/pacts/",
+    static: "./chameleon/data/",
   },
 });
 ```
