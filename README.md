@@ -1,9 +1,9 @@
-<img src="chameleon.png" align="right" width="120" />
-
 # Chameleon
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/EmanueleMinotto/chameleon)
+
+<img src="chameleon.png" align="right" width="120" />
 
 Open-source mock/faker server — generate realistic API responses from your existing schemas, with one-click deploy to Vercel.
 
