@@ -23,7 +23,7 @@ import { createAppFromManifest } from "@chameleon/server";
 import manifest from "../.chameleon/manifest.json" assert { type: "json" };
 
 export const config = {
-  runtime: "nodejs18.x",
+  runtime: "nodejs",
   // Switch to "edge" for faster cold starts (note: some custom generators may not work on Edge)
   // runtime: "edge",
 };
