@@ -7,7 +7,11 @@ import { configureFaker, warmStaticCache, loadGeneratorsBundle } from "@chameleo
 import { modeSwitchMiddleware } from "./middleware/mode-switch.js";
 import { handleRestRequest } from "./routes/rest.js";
 import { handleGraphQLRequest } from "./routes/graphql.js";
-import { handleHoppscotchPage, handleHoppscotchCollection } from "./routes/hoppscotch.js";
+import {
+  handleHoppscotchPage,
+  handleHoppscotchCollection,
+  handleHoppscotchProxy,
+} from "./routes/hoppscotch.js";
 
 export interface AppOptions {
   routes: ChameleonRoute[];
@@ -61,6 +65,10 @@ export function createApp(options: AppOptions): Hono {
       const baseUrl = new URL(c.req.url).origin;
       return handleHoppscotchCollection(c, routes, title, baseUrl);
     });
+    // Reverse-proxy the Hoppscotch PWA so it runs on the same origin
+    app.get(`${hoppPath}/app`, (c) => handleHoppscotchProxy(c, "/"));
+    // Nuxt static chunks requested by the proxied app use absolute paths (/_nuxt/*)
+    app.get("/_nuxt/*", (c) => handleHoppscotchProxy(c, c.req.path));
   }
 
   // ── GraphQL endpoint ──────────────────────────────────────────────────────

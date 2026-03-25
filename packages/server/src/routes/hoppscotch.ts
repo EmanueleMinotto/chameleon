@@ -45,7 +45,12 @@ function buildCollection(
   return { v: 1, name: title, folders: [], requests };
 }
 
-function buildHtml(title: string, collectionUrl: string, routes: ChameleonRoute[]): string {
+function buildHtml(
+  title: string,
+  collectionUrl: string,
+  routes: ChameleonRoute[],
+  hoppscotchPath: string,
+): string {
   const restRoutes = routes.filter((r) => r.source !== "graphql");
   const rows = restRoutes
     .map(
@@ -57,6 +62,8 @@ function buildHtml(title: string, collectionUrl: string, routes: ChameleonRoute[
   // Hoppscotch supports importing a collection via its "Import from URL" dialog.
   // The link below pre-fills the collection URL so the user only has to confirm.
   const importUrl = `https://hoppscotch.io/#/?url=${encodeURIComponent(collectionUrl)}`;
+  // Local PWA: served on the same origin — no CORS / mixed-content issues.
+  const localAppUrl = `${hoppscotchPath}/app#/?url=${encodeURIComponent(collectionUrl)}`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -93,12 +100,13 @@ function buildHtml(title: string, collectionUrl: string, routes: ChameleonRoute[
 <body>
   <div class="container">
     <h1>${title}</h1>
-    <p class="subtitle">Powered by Chameleon — import the collection into Hoppscotch to start testing.</p>
+    <p class="subtitle">Powered by Chameleon — open Hoppscotch to start testing.</p>
 
     <div class="card">
       <h2>Open in Hoppscotch</h2>
       <div class="actions">
-        <a class="btn btn-primary" href="${importUrl}" target="_blank" rel="noopener">Open in Hoppscotch</a>
+        <a class="btn btn-primary" href="${localAppUrl}">Open locally</a>
+        <a class="btn btn-secondary" href="${importUrl}" target="_blank" rel="noopener">Open on hoppscotch.io</a>
         <a class="btn btn-secondary" href="collection.json" download="collection.json">Download collection.json</a>
       </div>
       <div class="url-box">Collection URL: ${collectionUrl}</div>
@@ -114,6 +122,31 @@ function buildHtml(title: string, collectionUrl: string, routes: ChameleonRoute[
   </div>
 </body>
 </html>`;
+}
+
+/**
+ * Reverse-proxies a path from hoppscotch.io so the PWA is served on the
+ * same origin as the mock server (no CORS / mixed-content issues).
+ */
+export async function handleHoppscotchProxy(c: Context, remotePath: string): Promise<Response> {
+  const remoteUrl = `https://hoppscotch.io${remotePath}`;
+
+  const upstream = await fetch(remoteUrl, {
+    headers: {
+      accept: c.req.header("accept") ?? "*/*",
+      "accept-encoding": "identity", // avoid compressed streams we can't re-stream
+      "user-agent": c.req.header("user-agent") ?? "",
+    },
+    redirect: "follow",
+  });
+
+  const headers = new Headers();
+  const ct = upstream.headers.get("content-type");
+  if (ct) headers.set("content-type", ct);
+  headers.set("cache-control", upstream.headers.get("cache-control") ?? "public, max-age=3600");
+  headers.set("access-control-allow-origin", "*");
+
+  return new Response(upstream.body, { status: upstream.status, headers });
 }
 
 export function handleHoppscotchCollection(
@@ -134,6 +167,6 @@ export function handleHoppscotchPage(
 ): Response {
   const origin = new URL(c.req.url).origin;
   const collectionUrl = `${origin}${hoppscotchPath}/collection.json`;
-  const html = buildHtml(title, collectionUrl, routes);
+  const html = buildHtml(title, collectionUrl, routes, hoppscotchPath);
   return c.html(html);
 }
