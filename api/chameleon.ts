@@ -15,6 +15,7 @@
  *   - chameleon/generators/         (custom generator functions)
  */
 import { handle } from "hono/vercel";
+import type { Manifest } from "@chameleon/core";
 import { createAppFromManifest } from "@chameleon/server";
 
 // The manifest is built at deploy time by `chameleon build`
@@ -29,5 +30,5 @@ export const config = {
 };
 
 // Create the Hono app from the manifest and export it as the Vercel handler
-const app = await createAppFromManifest(manifest);
+const app = await createAppFromManifest(manifest as unknown as Manifest);
 export default handle(app);
