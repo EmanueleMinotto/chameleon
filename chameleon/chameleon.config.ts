@@ -70,12 +70,11 @@ export default defineConfig({
   generatorsDir: "./chameleon/generators",
 
   // ── Hoppscotch explorer ──────────────────────────────────────────────────────
-  // When enabled, serves a Hoppscotch-compatible collection and landing page.
+  // Serves a Hoppscotch-compatible collection and landing page.
   // - Landing page: <baseUrl>/_hoppscotch
   // - Collection JSON: <baseUrl>/_hoppscotch/collection.json
-  // Uncomment to enable:
-  // hoppscotch: {
-  //   path: "/_hoppscotch",    // URL path for the explorer (default: "/_hoppscotch")
-  //   title: "Petstore API",   // Collection title shown in Hoppscotch
-  // },
+  hoppscotch: {
+    path: "/_hoppscotch",
+    title: "Petstore API",
+  },
 });
