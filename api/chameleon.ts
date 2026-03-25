@@ -20,7 +20,7 @@ import { createAppFromManifest } from "@chameleon/server";
 // The manifest is built at deploy time by `chameleon build`
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — file is generated at build time
-import manifest from "../.chameleon/manifest.json" assert { type: "json" };
+import manifest from "../.chameleon/manifest.json" with { type: "json" };
 
 export const config = {
   runtime: "nodejs",
