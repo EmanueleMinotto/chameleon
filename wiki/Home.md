@@ -35,6 +35,6 @@ Chameleon is an open-source mock/faker server that generates realistic API respo
 | [Proxy Mode](Proxy-Mode)               | Switching between mock and a real upstream API            |
 | [Federation](Federation)               | Delegating routes to other Chameleon instances            |
 | [Overlays](Overlays)                   | Merging static JSON on top of generated responses         |
-| [API Client Exports](API-Clients)       | Exporting collections for Hoppscotch, Postman, and Bruno  |
+| [API Client Exports](API-Clients)      | Exporting collections for Hoppscotch, Postman, and Bruno  |
 | [Vercel Deployment](Vercel)            | Deploying to Vercel                                       |
 | [CLI Reference](CLI)                   | All CLI commands and flags                                |

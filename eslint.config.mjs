@@ -3,7 +3,7 @@ import tsParser from "@typescript-eslint/parser";
 
 export default [
   {
-    ignores: ["**/dist/**", "**/node_modules/**", "**/.chameleon/**"],
+    ignores: ["**/dist/**", "**/node_modules/**", "**/.chameleon/**", "api/chameleon.js"],
   },
   {
     files: ["**/*.ts"],
