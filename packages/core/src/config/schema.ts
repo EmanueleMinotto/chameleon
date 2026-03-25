@@ -34,10 +34,10 @@ const schemasSchema = z.object({
   static: z.union([z.string(), z.array(z.string())]).optional(),
 });
 
-const hoppscotchSchema = z.object({
-  /** URL path where the Hoppscotch explorer is served, e.g. "/_hoppscotch" */
-  path: z.string().default("/_hoppscotch"),
-  /** Title shown in the Hoppscotch collection and landing page */
+const explorerSchema = z.object({
+  /** URL path where the API explorer is served, e.g. "/_explorer" */
+  path: z.string().default("/_explorer"),
+  /** Title shown on the landing page and in the exported collections */
   title: z.string().default("Chameleon API Explorer"),
 });
 
@@ -56,10 +56,10 @@ export const chameleonConfigSchema = z.object({
   overlays: z.array(overlaySchema).default([]),
   generatorsDir: z.string().default("./generators"),
   /**
-   * When set, serves a Hoppscotch-compatible collection and landing page
-   * at the specified path. Omit to disable.
+   * When set, serves a landing page and collection exports for Hoppscotch,
+   * Postman, and Bruno at the specified path. Omit to disable.
    */
-  hoppscotch: hoppscotchSchema.optional(),
+  explorer: explorerSchema.optional(),
 });
 
 export type ChameleonConfig = z.infer<typeof chameleonConfigSchema>;

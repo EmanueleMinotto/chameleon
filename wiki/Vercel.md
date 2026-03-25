@@ -41,7 +41,7 @@ vercel deploy --prod
 2. **Resolved annotations** — the merged annotation map.
 3. **Bundled generators** — custom TypeScript generator files, bundled with esbuild into a single JS string.
 4. **Static data** — the contents of all static JSON files referenced in overlays.
-5. **Config snapshot** — a subset of your config (faker seed, proxy, federation, overlays, hoppscotch settings).
+5. **Config snapshot** — a subset of your config (faker seed, proxy, federation, overlays, explorer settings).
 
 At cold-start, the Vercel function loads this file and initialises the Hono server. No file system access or TypeScript compilation happens at runtime.
 

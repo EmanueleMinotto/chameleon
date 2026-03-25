@@ -8,9 +8,9 @@ import { modeSwitchMiddleware } from "./middleware/mode-switch.js";
 import { handleRestRequest } from "./routes/rest.js";
 import { handleGraphQLRequest } from "./routes/graphql.js";
 import {
-  handleHoppscotchPage,
+  handleExplorerPage,
   handleHoppscotchCollection,
-  handleHoppscotchProxy,
+  handlePostmanCollection,
 } from "./routes/hoppscotch.js";
 
 export interface AppOptions {
@@ -57,18 +57,18 @@ export function createApp(options: AppOptions): Hono {
   // ── Health check ──────────────────────────────────────────────────────────
   app.get("/_chameleon/health", (c) => c.json({ status: "ok", instanceId }));
 
-  // ── Hoppscotch explorer ───────────────────────────────────────────────────
-  if (config.hoppscotch) {
-    const { path: hoppPath, title } = config.hoppscotch;
-    app.get(hoppPath, (c) => handleHoppscotchPage(c, routes, title, hoppPath));
-    app.get(`${hoppPath}/collection.json`, (c) => {
+  // ── API client export endpoints ────────────────────────────────────────────
+  if (config.explorer) {
+    const { path: explorerPath, title } = config.explorer;
+    app.get(explorerPath, (c) => handleExplorerPage(c, routes, title, explorerPath));
+    app.get(`${explorerPath}/collection.json`, (c) => {
       const baseUrl = new URL(c.req.url).origin;
       return handleHoppscotchCollection(c, routes, title, baseUrl);
     });
-    // Reverse-proxy the Hoppscotch PWA so it runs on the same origin
-    app.get(`${hoppPath}/app`, (c) => handleHoppscotchProxy(c, "/"));
-    // Nuxt static chunks requested by the proxied app use absolute paths (/_nuxt/*)
-    app.get("/_nuxt/*", (c) => handleHoppscotchProxy(c, c.req.path));
+    app.get(`${explorerPath}/postman.json`, (c) => {
+      const baseUrl = new URL(c.req.url).origin;
+      return handlePostmanCollection(c, routes, title, baseUrl);
+    });
   }
 
   // ── GraphQL endpoint ──────────────────────────────────────────────────────
@@ -112,7 +112,7 @@ export async function createAppFromManifest(manifest: Manifest): Promise<Hono> {
       federation: manifest.config.federation.map((f) => ({ ...f, passHeaders: true })),
       overlays: manifest.config.overlays,
       generatorsDir: "./generators",
-      hoppscotch: manifest.config.hoppscotch,
+      explorer: manifest.config.explorer,
     },
   });
 }

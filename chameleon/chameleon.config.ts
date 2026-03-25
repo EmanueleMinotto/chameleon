@@ -69,12 +69,13 @@ export default defineConfig({
   // .ts files here can be referenced in annotations with "custom: ./chameleon/generators/myFn.ts"
   generatorsDir: "./chameleon/generators",
 
-  // ── Hoppscotch explorer ──────────────────────────────────────────────────────
-  // Serves a Hoppscotch-compatible collection and landing page.
-  // - Landing page: <baseUrl>/_hoppscotch
-  // - Collection JSON: <baseUrl>/_hoppscotch/collection.json
-  hoppscotch: {
-    path: "/_hoppscotch",
+  // ── API client export ─────────────────────────────────────────────────────────
+  // Serves a landing page with collection downloads for Hoppscotch, Postman, and Bruno.
+  // - Landing page:         <baseUrl>/_explorer
+  // - Hoppscotch collection: <baseUrl>/_explorer/collection.json
+  // - Postman collection:    <baseUrl>/_explorer/postman.json
+  explorer: {
+    path: "/_explorer",
     title: "Petstore API",
   },
 });

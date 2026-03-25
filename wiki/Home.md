@@ -19,7 +19,7 @@ Chameleon is an open-source mock/faker server that generates realistic API respo
 | **Static overlays**      | Deep-merge static JSON files on top of generated responses                             |
 | **Proxy mode**           | One HTTP header switches between mock and a real upstream server                       |
 | **Federation**           | Delegate specific routes to other Chameleon instances                                  |
-| **Hoppscotch explorer**  | Built-in endpoint browser, importable into Hoppscotch with one click                   |
+| **API client exports**   | Landing page with one-click imports for Hoppscotch, Postman, and Bruno                 |
 | **Vercel deploy**        | One-click deploy — `chameleon build` pre-compiles everything for cold-start efficiency |
 | **Hot reload**           | `--watch` mode reloads schemas and annotations without restarting the server           |
 
@@ -35,6 +35,6 @@ Chameleon is an open-source mock/faker server that generates realistic API respo
 | [Proxy Mode](Proxy-Mode)               | Switching between mock and a real upstream API            |
 | [Federation](Federation)               | Delegating routes to other Chameleon instances            |
 | [Overlays](Overlays)                   | Merging static JSON on top of generated responses         |
-| [Hoppscotch](Hoppscotch)               | Built-in API explorer integration                         |
+| [API Client Exports](API-Clients)       | Exporting collections for Hoppscotch, Postman, and Bruno  |
 | [Vercel Deployment](Vercel)            | Deploying to Vercel                                       |
 | [CLI Reference](CLI)                   | All CLI commands and flags                                |

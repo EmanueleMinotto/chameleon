@@ -153,7 +153,7 @@ export interface Manifest {
       file: string;
       strategy: "replace" | "deep-merge";
     }>;
-    hoppscotch?: {
+    explorer?: {
       path: string;
       title: string;
     };

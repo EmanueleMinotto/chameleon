@@ -80,11 +80,11 @@ export default defineConfig({
   // Default: "./generators"
   generatorsDir: "./chameleon/generators",
 
-  // ── Hoppscotch explorer ───────────────────────────────────────────────────
-  // Optional. When set, serves a Hoppscotch-compatible collection and a
-  // landing page at the specified path.
-  hoppscotch: {
-    path: "/_hoppscotch", // default: "/_hoppscotch"
+  // ── API client export ─────────────────────────────────────────────────────
+  // Optional. When set, serves a landing page with collection downloads for
+  // Hoppscotch, Postman, and Bruno at the specified path.
+  explorer: {
+    path: "/_explorer", // default: "/_explorer"
     title: "My API Explorer", // default: "Chameleon API Explorer"
   },
 });
