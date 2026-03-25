@@ -53,7 +53,7 @@ test(core): add unit tests for OpenAPI field walker
 git clone https://github.com/EmanueleMinotto/chameleon.git
 cd chameleon
 
-# Install dependencies (requires pnpm >= 9 and Node >= 18)
+# Install dependencies (requires pnpm >= 9 and Node >= 24)
 pnpm install
 
 # Build all packages
