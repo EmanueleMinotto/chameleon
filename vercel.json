@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "pnpm install && pnpm build && pnpm --filter @chameleon/cli exec chameleon build --config chameleon/chameleon.config.ts",
+  "buildCommand": "pnpm install && pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts",
   "functions": {
     "api/chameleon.ts": {
       "maxDuration": 10,
