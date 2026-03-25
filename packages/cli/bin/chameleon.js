@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-import "../dist/index.js";
+const { register } = await import("tsx/esm/api");
+register();
+await import("../dist/index.js");

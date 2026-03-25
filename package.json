@@ -2,6 +2,7 @@
   "name": "chameleon",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "description": "Open-source mock/faker server — generate realistic API responses from your schemas",
   "scripts": {
     "build": "pnpm -r build",
