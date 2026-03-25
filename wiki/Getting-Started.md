@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- **Node.js** >= 20
+- **Node.js** >= 24
 - **pnpm** >= 9 — install with `npm install -g pnpm`
 
 ## Option 1 — Use this template (recommended)
