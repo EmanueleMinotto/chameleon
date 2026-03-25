@@ -4,12 +4,6 @@
   "installCommand": "pnpm install",
   "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts && node_modules/.bin/esbuild api/_handler.ts --bundle --format=esm --platform=node --outfile=api/chameleon.js",
   "outputDirectory": "public",
-  "functions": {
-    "api/chameleon.js": {
-      "maxDuration": 10,
-      "memory": 256
-    }
-  },
   "routes": [
     {
       "src": "/_chameleon/(.*)",
