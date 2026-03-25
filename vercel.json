@@ -3,6 +3,7 @@
   "version": 2,
   "installCommand": "pnpm install --include=dev",
   "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts",
+  "outputDirectory": "public",
   "functions": {
     "api/chameleon.ts": {
       "maxDuration": 10,
