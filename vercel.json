@@ -2,10 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts",
+  "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts && node_modules/.bin/esbuild api/chameleon.ts --bundle --format=esm --platform=node --outfile=api/chameleon.js",
   "outputDirectory": "public",
   "functions": {
-    "api/chameleon.ts": {
+    "api/chameleon.js": {
       "maxDuration": 10,
       "memory": 256
     }

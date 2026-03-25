@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .chameleon/
+api/chameleon.js
 *.tsbuildinfo
 .vercel/
 .env
