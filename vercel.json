@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "installCommand": "pnpm install --include=dev",
+  "installCommand": "pnpm install",
   "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts",
   "outputDirectory": "public",
   "functions": {
