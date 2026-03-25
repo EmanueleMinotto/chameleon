@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts && node_modules/.bin/esbuild api/_handler.ts --bundle --format=esm --platform=node --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\" --outfile=api/chameleon.js",
+  "buildCommand": "pnpm build && node packages/cli/bin/chameleon.js build --config chameleon/chameleon.config.ts && pnpm build:api",
   "outputDirectory": "public",
   "routes": [
     {

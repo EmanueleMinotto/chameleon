@@ -13,7 +13,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.{ts,json,yaml,yml,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,json,yaml,yml,md}\""
+    "format:check": "prettier --check \"**/*.{ts,json,yaml,yml,md}\"",
+    "build:api": "esbuild api/_handler.ts --bundle --format=esm --platform=node \"--banner:js=import { createRequire } from 'module'; const require = createRequire(import.meta.url);\" --outfile=api/chameleon.js"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
