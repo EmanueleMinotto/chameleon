@@ -1,5 +1,5 @@
 import { readdir, writeFile, mkdir } from "node:fs/promises";
-import { join, extname } from "node:path";
+import { join, extname, resolve, relative } from "node:path";
 import { consola } from "consola";
 import { build as esbuild } from "esbuild";
 import type { Manifest } from "@chameleon/core";
@@ -57,6 +57,7 @@ export async function runBuild(options: BuildOptions): Promise<void> {
         file: o.file,
         strategy: o.strategy,
       })),
+      explorer: config.explorer,
     },
   };
 
@@ -75,18 +76,29 @@ async function bundleGenerators(generatorsDir: string): Promise<string | undefin
     const files = await readdir(generatorsDir, { withFileTypes: true });
     entries = files
       .filter((f) => f.isFile() && (extname(f.name) === ".ts" || extname(f.name) === ".js"))
-      .map((f) => join(generatorsDir, f.name));
+      .map((f) => resolve(join(generatorsDir, f.name)));
   } catch {
     return undefined; // Directory doesn't exist or is empty
   }
 
   if (entries.length === 0) return undefined;
 
+  // Build a CJS module that exports an object keyed by relative file path.
+  // Each value is the default export of the generator file.
+  // Using CJS so the bundle can be evaluated with `new Function` at runtime
+  // without requiring dynamic ESM import() support.
+  const cwd = process.cwd();
+  const relPaths = entries.map((e) => relative(cwd, e).replace(/\\/g, "/"));
+  const requireLines = entries
+    .map((abs, i) => `  ${JSON.stringify(relPaths[i])}: require(${JSON.stringify(abs)}).default`)
+    .join(",\n");
+  const virtualCode = `module.exports = {\n${requireLines}\n};`;
+
   try {
     const result = await esbuild({
-      entryPoints: entries,
+      stdin: { contents: virtualCode, resolveDir: cwd, loader: "js" },
       bundle: true,
-      format: "esm",
+      format: "cjs",
       platform: "node",
       write: false,
       minify: false,

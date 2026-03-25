@@ -14,7 +14,7 @@
  *   - chameleon/annotations/        (annotation files)
  *   - chameleon/generators/         (custom generator functions)
  */
-import { handle } from "hono/vercel";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Manifest } from "@chameleon/core";
 import { createAppFromManifest } from "@chameleon/server";
 
@@ -23,12 +23,38 @@ import { createAppFromManifest } from "@chameleon/server";
 // @ts-ignore — file is generated at build time
 import manifest from "../.chameleon/manifest.json" with { type: "json" };
 
-export const config = {
-  runtime: "nodejs",
-  // Switch to "edge" for faster cold starts (note: some custom generators may not work on Edge)
-  // runtime: "edge",
-};
+export const config = { runtime: "nodejs" };
 
-// Create the Hono app from the manifest and export it as the Vercel handler
 const app = await createAppFromManifest(manifest as unknown as Manifest);
-export default handle(app);
+
+/**
+ * Vercel Node.js runtime calls the default export with (IncomingMessage, ServerResponse).
+ * Hono's app.fetch() expects a Web API Request, so we convert here.
+ */
+export default async function handler(req: IncomingMessage, res: ServerResponse) {
+  const host = req.headers.host ?? "localhost";
+  const url = new URL(req.url ?? "/", `http://${host}`);
+
+  const headers = new Headers();
+  for (const [key, val] of Object.entries(req.headers)) {
+    if (val === undefined) continue;
+    for (const v of Array.isArray(val) ? val : [val]) headers.append(key, v);
+  }
+
+  const method = req.method ?? "GET";
+  const hasBody = method !== "GET" && method !== "HEAD";
+  const body = hasBody
+    ? await new Promise<Uint8Array>((resolve, reject) => {
+        const chunks: Buffer[] = [];
+        req.on("data", (chunk: Buffer) => chunks.push(chunk));
+        req.on("end", () => resolve(Buffer.concat(chunks)));
+        req.on("error", reject);
+      })
+    : undefined;
+
+  const response = await app.fetch(new Request(url, { method, headers, body }));
+
+  res.statusCode = response.status;
+  response.headers.forEach((value, key) => res.setHeader(key, value));
+  res.end(Buffer.from(await response.arrayBuffer()));
+}

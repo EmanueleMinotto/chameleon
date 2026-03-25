@@ -137,7 +137,7 @@ export interface Manifest {
   annotations: AnnotationMap;
   /** key: original file path, value: parsed JSON content */
   staticData: Record<string, unknown>;
-  /** Base64-encoded ESM bundle of all custom generators */
+  /** Base64-encoded CJS bundle of all custom generators, keyed by relative file path */
   generatorsBundle?: string;
   config: {
     fakerSeed: number | null;

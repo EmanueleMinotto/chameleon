@@ -46,30 +46,14 @@ export function registerBundledGenerators(generators: Record<string, GeneratorFn
 }
 
 /**
- * Evaluates a base64-encoded ESM bundle and registers all exported generators.
+ * Evaluates a base64-encoded CJS bundle and registers all exported generators.
+ * The bundle exports an object keyed by relative file path.
  * Used to bootstrap custom generators from a Vercel manifest.
  */
 export async function loadGeneratorsBundle(base64Bundle: string): Promise<void> {
   const code = Buffer.from(base64Bundle, "base64").toString("utf-8");
-  const dataUrl = `data:text/javascript;base64,${base64Bundle}`;
-
-  try {
-    const mod = (await import(dataUrl)) as Record<string, unknown>;
-    const generators: Record<string, GeneratorFn> = {};
-
-    for (const [key, value] of Object.entries(mod)) {
-      if (typeof value === "function") {
-        generators[key] = value as GeneratorFn;
-      }
-    }
-
-    registerBundledGenerators(generators);
-  } catch {
-    // Data URL imports may not work in all Node versions; fall back to eval
-    const fn = new Function("module", "exports", "require", code);
-    const exports: Record<string, unknown> = {};
-    const module = { exports };
-    fn(module, exports, () => ({}));
-    registerBundledGenerators(module.exports as Record<string, GeneratorFn>);
-  }
+  const fn = new Function("require", "module", "exports", code);
+  const mod = { exports: {} as Record<string, GeneratorFn> };
+  fn(() => ({}), mod, mod.exports);
+  registerBundledGenerators(mod.exports);
 }
